@@ -1,0 +1,229 @@
+==Overview==
+Animation names with age overrides come in one of two formats: "x2y_anim_name" and "x_anim_name" where "x" is the primary actor and "y" is the target.  An "a_anim_name", "a2a_anim_name" or "a2o_anim_name" will be the default animation used as a fall back if a requested animation (e.g. "t2c_anim_name") does not exist.
+
+For the single actor names, the name hash derives directly from the name when "x" is "a" or "o" with the top bit cleared; otherwise, "x" is replaced with "a" to get the name hash, the top bit is set and the age mask is XORed with the high byte.  A similar approach is taken for the two-actor animation names: where both actors are either "a" or "o", the name is hashed directly and the top bit cleared; otherwise an "x" other than "o" is treated as "a" to get the hash, the top bit set and the age mask applied to the top byte for the primary actor and the second highest byte for the target.
+
+{| class="wikitable" border="1"
+! Mask !! Age letter
+|-
+| 0x01 || b
+|-
+| 0x02 || p
+|-
+| 0x03 || c
+|-
+| 0x04 || t
+|-
+| 0x05 || h
+|-
+| 0x06 || e
+|-
+| 0x08 || ad
+|-
+| 0x09 || cd
+|-
+| 0x0A || al
+|-
+| 0x0D || ac
+|-
+| 0x0E || cc
+|-
+| 0x10 || ah
+|-
+| 0x11 || ch
+|-
+| 0x12 || ab
+|-
+| 0x13 || ar
+|}
+
+==Format==
+===Main Header===
+ DWORD 
+ FLOAT 
+ FLOAT 
+ FLOAT 
+ FLOAT 
+ FLOAT 
+ FLOAT 
+ FLOAT 
+ FLOAT 
+ FLOAT 
+ FLOAT
+ DWORD //always the FNV32 hash seed
+ DWORD //always the FNV32 hash seed
+ DWORD //always the FNV32 hash seed
+ DWORD len1
+ CHAR[len1] 
+ DWORD len2
+ CHAR[len2] 
+ DWORD len3
+ --repeat(len3)
+      DWORD len4
+      CHAR[len4]
+ DWORD IKTargetCount
+ DWORD IKChainCount
+ --repeat(IKTargetCount)
+     DWORD ActorNameLen
+     CHAR[ActorNameLen]
+     DWORD BoneNameLen
+     CHAR[BoneNameLen] BoneName
+     DWORD IKChainIndex
+     DWORD IKChainTargetSequence
+ --repeat until ID is invalid?
+     DWORD ClipEventID
+     DWORD ClipEventLength
+     --Data depends on ClipEventID.  See Below.
+ DWORD ClipDataSize
+ --insert S3Clip section
+
+
+
+==S3Clip Section==
+Frame data is format dependent.  If the time code override is used, it is at the start of the frame data chunk, with the first joint movement rule starting right after it.
+ QWORD _S3Clip_ // Integer value, not a string, so swapped for byte order on little endian
+ DWORD version // 2
+ DWORD // blank
+ FLOAT frameduration // Always seen as 1/30
+ WORD  framecount // Not necessarily the number of frames in this clip
+ WORD  // unknown - might be uncleared memory
+ DWORD count1 // Joint movement rules
+ DWORD count2 // Indexed float count - floats listed at start of frame data
+ DWORD offset1 // Offset from start of clip header to joint movement rules
+ DWORD offset2 // Offset from start of clip header to frame data
+ DWORD anim name offset // Offset from start of clip header to null terminated animation name
+ DWORD source file offset // Offset from start of clip header to null terminated source file
+===Joint Movement Rules===
+ DWORD frame data offset // Offset into frame data for this movement data
+ DWORD hash // This is typically a FNV32 hash of a bone name in the rig.  In the case of morphs, it is the (FNV64 of name/InstanceID) of a 0x0A037DDA(pet face morph blend) resource 0xFFFFFFFF to make it 32 bits
+ FLOAT offset // Offset to apply to the values in the frame data
+ FLOAT scale // Scale to apply to the values in the frame data
+ WORD frames // Number of defined frames in the frame data
+ WORD frame data type
+
+===Frame Data===
+ WORD Frame Index // Can skip some or most frames
+ WORD Sign bits + ? // Has some data beyond sign bits in there
+ // Type dependent data (Bit 0 = sign of first value, bit 1 = sign of second value, etc)
+The type dependent data can be one of the following.  The sign bits are applied to all values, even those that are floats (Indexed float values).  For integer values, the value is converted to a float by dividing by the maximum possible value, for example 4095 or 1023.
+{| class="wikitable" border="1"
+|-
+! Data type
+! Data format
+! Count
+! Usage notes
+|-
+| 0x103
+| WORD
+| 3
+| Indexed float reference
+|-
+| 0x10b
+| null translation
+| 0
+| Always with a 0 count
+|-
+| 0x112
+| DWORD
+Contains 3 10-bit values packed into 30 bits
+| 1
+| Used as translation values
+|-
+| 0x20c
+| Always with a 0 count
+| 0
+| Null rotation
+|-
+| 0x211
+| WORD? (Always with a 0 count)
+| 4?
+| Indexed Float Reference?
+|-
+| 0x214
+| DWORD
+Only 12 bits used (0...4095)
+| 2
+| Quaternion rotational values
+Order is XYZW.
+Framework requires +90 degree rotation
+|-
+| 0x705
+| WORD
+| 1
+|(Added with Pets) Scalar morph value.  Divide by 0xFFFF and apply scale/offsets (these should then range from ~0.0-~1.0
+|-
+| 0x709
+| Always with a 0 count
+| 0
+| Unknown (Added with Pets)
+|}
+
+==Clip Events== 
+===Event Header===
+Events start with this structure and have event type dependent data that follows
+{| class="wikitable" border="1"
+! Type 
+! Description
+|-
+| DWORD || &nbsp;
+|-
+| DWORD || &nbsp;
+|-
+| FLOAT || &nbsp;
+|-
+|}
+
+===Event Type Data===
+===Type 3===
+{| class="wikitable" border="1"
+! Type
+! Name
+! Description
+|-
+| STRING || SoundName || 0x80 characters
+|- 
+|}
+
+===Type 5===
+{| class="wikitable" border="1"
+! Type
+! Name
+! Description
+|-
+| STRING || SlotName || 0x80 characters
+|- 
+| DWORD || ActorNameHash || FNV32 hash
+|-
+| DWORD || BoneNameHash || FNV32 hash
+|-
+| BYTE[16] || &nbsp; || zero in all samples
+|- 
+| STRING || EffectName || 0x80 characters
+|-
+|}
+
+
+
+===Type 14===
+{| class="wikitable" border="1"
+! Type
+! Name
+! Description
+|-
+| STRING || &nbsp; || 0x80 characters
+|- 
+| DWORD || Actor1NameHash || FNV32 hash
+|-
+| DWORD || Actor2NameHash || FNV32 hash
+|-
+|}
+
+===Type 19===
+{| class="wikitable" border="1"
+! Type
+! Name
+! Description
+|-
+| FLOAT || &nbsp; || &nbsp;
+|-
+|}

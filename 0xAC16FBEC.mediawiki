@@ -1,0 +1,23 @@
+This unknown type, which could fill a similar role to TS3's FACE resource, holds references to several GEOMs.
+
+ DWORD * 5 Header type info
+ QWORD IID of current resource
+ DWORD TID of current resource
+ DWORD GID of current resource
+ 
+ DWORD unk
+ DWORD unk
+ DWORD unk
+ 
+ DWORD Count1 number of blocks
+ 
+ For Count1
+   DWORD some sort of entry type indicator?
+   5 Bytes that are always 00 44 1C 46 00 in the ones I have looked at
+ 
+   DWORD Count2 number of GEOMs referenced in this block
+ 
+   For Count2
+     QWORD IID of GEOM
+     DWORD TID of GEOM
+     DWORD GID of GEOM
