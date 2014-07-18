@@ -1,2 +1,0 @@
-==Overview==
-This appears to be a form of video file.  When saved as an .avi file, windows media player will play it (with some initial corruption) and VLC plays it but fails to decode audio track.

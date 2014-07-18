@@ -1,6 +1,0 @@
-==Resources==
-* [[DBPF|Package File Format]]
-* [[Sims-4---Packed-File-Types|Files by type code]]
-* [[RCOL|Resource Collections (RCOL)]]
-* [[Versions|Version numbers]]
-* Resource Chain
