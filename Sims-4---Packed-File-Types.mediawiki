@@ -1,0 +1,114 @@
+{| class="wikitable sortable" border="1"
+|- Sortable table
+|-
+! Type ID !! Abbr !! File type !! class="unsortable" | Comments
+|-
+| [[0x00B2D882|0x00B2D882]] || _IMG || dds || DDS Image (DST5,  DST1, ATI2, standard)
+|-
+| [[0x010FAF71|0x010FAF71]] || &nbsp; || &nbsp; || &nbsp;
+|-
+| [[0x015A1849|0x015A1849]] || GEOM || geom|| Body Geometry File?
+|-
+| [[0x01661233|0x01661233]] || MODL || scene || Object model (aka object geometry)
+|-
+| [[0x01A527DB|0x01A527DB]] || _AUD || mm || audio snr (voice/aud)
+|-
+| [[0x01D10F34|0x01D10F34]] || MLOD || scene || Object model LODs (aka Object Geometry Lods)
+|-
+| [[0x01EEF63A|0x01EEF63A]] || _AUD || mm || audio sns (fx/music)
+|-
+| [[0x025ED6F4|0x025ED6F4]] || SIMO || xml || Sim outfit
+|-
+| [[0x02D5DF13|0x02D5DF13]] || JAZZ || xml || Swing resource (animation state machines)
+|-
+| [[0x0333406C|0x0333406C]] || XML || xml || Font configuration
+|-
+| [[0x034AEECB|0x034AEECB]] || CASP || caspart || CAS Part Data
+|-
+| [[0x0354796A|0x0354796A]] || TONE  || skintone || &nbsp;
+|-
+| [[0x0355E0A6|0x0355E0A6]] || BOND || bonedelta || &nbsp;
+|-
+| [[0x03B4C61D|0x03B4C61D]] || LITE || light || &nbsp;
+|-
+| [[0x067CAA11|0x067CAA11]] || BGEO || blendgeom || &nbsp;
+|-
+| [[0x105205BA|0x105205BA]] || &nbsp; || &nbsp; || &nbsp;
+|-
+| [[0x1A8506C5|0x1A8506C5]] || XML || xml || ModalMusicWrappings
+|-
+| [[0x1B25A024|0x1B25A024]] || XML || xml || Sound properties
+|-
+| [[0x220557DA|0x220557DA]] || STBL || stbl|| String table
+|-
+| [[0x25796DCA|0x25796DCA]] || &nbsp; || &nbsp; || Fonts
+|-
+| [[0x26978421|0x26978421]] || &nbsp; || &nbsp; || &nbsp;
+|-
+| [[0x276CA4B9|0x276CA4B9]] || &nbsp; || &nbsp; || Fonts Symbols
+|-
+| [[0x2A8A5E22|0x2A8A5E22]] || &nbsp; || &nbsp;  || Still unknown
+|-
+| [[0x2F7D0004|0x2F7D0004]] || PNG || png || Look like background blends
+|-
+| [[0x3453CF95|0x3453CF95]] || DDS || DDS || DDS DXT5 RLE Image
+|-
+| [[0x376840D7|0x376840D7]] || AVI || Video || Starts with 'SCH1'
+|-
+| [[0x3C1AF1F2|0x3C1AF1F2]] || PNG || png || Used for thumbnails
+|-
+| [[0x4115F9D5|0x4115F9D5]] || XML || xml || Various sound configs
+|-
+| [[0x545AC67A|0x545AC67A]] || DATA || data|| Unknown
+|-
+| [[0x5B282D45|0x5B282D45]] || PNG || png|| Thumbnails
+|-
+| [[0x62ECC59A|0x62ECC59A]] || _GFX || gfx || GFX Files
+|-
+| [[0x6B20C4F3|0x6B20C4F3]] || CLIP || animation || Animations
+|-
+| [[0x71BDB8A2|0x71BDB8A2]] || &nbsp; || &nbsp; || &nbsp;
+|-
+| [[0x8B18FF6E|0x8B18FF6E]] || &nbsp; || &nbsp; || &nbsp;
+|-
+| [[0x8EAF13DE|0x8EAF13DE]] || _RIG  || skeleton || &nbsp;
+|-
+| [[0x99D98089|0x99D98089]] || XML || xml || Button UI event mapping
+|-
+| [[0x9C925813|0x9C925813]] || PNG || png || Thumbnails
+|-
+| [[0x9D1AB874|0x9D1AB874]] || &nbsp; || &nbsp; || &nbsp;
+|-
+| [[0xA576C2E7|0xA576C2E7]] || XML || xml || sound? some kind of config anyway...
+|-
+| [[0xAC16FBEC|0xAC16FBEC]] || &nbsp; || &nbsp; || References several GEOM resources
+|-
+| [[0xB3C438F0|0xB3C438F0]] || &nbsp; || &nbsp; || saved sim data?
+|-
+| [[0xB6C8B6A0|0xB6C8B6A0]] || _IMG || dds || DDS Image (overlays?)
+|-
+| [[0xBA856C78|0xBA856C78]] || _IMG || dds || DDS DXT5 RLES
+|-
+| [[0xBDD82221|0xBDD82221]] || AUEV || auev || String table of UI references
+|-
+| [[0xC0DB5AE7|0xC0DB5AE7]] || &nbsp; || &nbsp; || I am sure this is some type of VPXY but not as we know it - Inge
+|-
+| [[0xC202C770|0xC202C770]] ||  XML || xml || Music Data File
+|-
+| [[0xC582D2FB|0xC582D2FB]] || XML || xml || XML File
+|-
+| [[0xC5F6763E|0xC5F6763E]] || &nbsp; || &nbsp; || &nbsp;
+|-
+| [[0xCD9DE247|0xCD9DE247]] || PNG || png || Thumbnails
+|-
+| [[0xD382BF57|0xD382BF57]] || FTPT || scene || &nbsp;
+|-
+| [[0xDB43E069|0xDB43E069]] || &nbsp; || &nbsp; || &nbsp;
+|-
+| [[0xE231B3D8|0xE231B3D8]] || XML || xml || ObjectModifiers
+|-
+| [[0xEA5118B0|0xEA5118B0]] || _SWB || &nbsp; || Effect file
+|-
+| [[0xEAA32ADD|0xEAA32ADD]] || &nbsp; || &nbsp; || &nbsp;
+|-
+| [[0xFD04E3BE|0xFD04E3BE]] || &nbsp; || &nbsp; || &nbsp;

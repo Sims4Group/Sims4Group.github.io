@@ -1,0 +1,21 @@
+ WORD
+ DWORD
+ DWORD Count1
+ String of length Count1
+ 5 (no count field) of
+   DWORD = "04 00 00 00"
+   QWORD IID
+   DWORD TID
+   DWORD GID
+   (Typically of Modl, FTPT etc)
+   
+ DWORD Count2
+ For Count2
+   DWORD
+   
+ DWORD
+ DWORD
+ 
+ WORD Count3
+ For Count3
+   QWORD

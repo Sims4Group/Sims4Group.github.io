@@ -1,0 +1,88 @@
+
+==Overview==
+This is an [[RCOL|RCOL]] chunk.
+```
+ DWORD 'MATD'
+ DWORD version
+ DWORD		// Material name hash or 0
+ DWORD		// Shader name hash or 0
+ DWORD length	// Length from 'MTRL' or 'MTNF'; 16+(16*count)+(4*parmcount)
+ --if version < 0x103
+ 	DWORD 'MTRL'   // Used instead of MTNF if the internal list of resource keys is null.
+ 	DWORD 0
+ 	WORD
+ 	WORD
+ --else if version >= 0x103
+ 	DWORD IsVideoSurface	// boolean
+ 	DWORD IsPaintingSurface //
+ 	DWORD 'MTNF' or 'MTRL'	// Used if the internal list of resource keys is non-null.
+ 				// Note that it may still just be of zero length.
+                                // TODO: Is 'MTNF' even used anymore?  Will using it case problems in TS4?
+ 	DWORD 0
+ 	DWORD datasize	// Size of the data block (total parms*4)
+ 
+ DWORD count
+ --count repeats of
+ 	DWORD param name hash	// Valid values depend on the Shader used
+ 				// see ShaderParams for another list
+ 	DWORD			// Data type code (see below)
+ 	DWORD data size (in DWORDS)
+ 	DWORD data offset	// From 'MTRL' or 'MTNF'
+ 
+ --count repeats of
+ 	--data count repeats of  
+ 		--insert data // see Param Datatypes below for possible typecode/size combos
+ 		--insert padding to DWORD boundry
+```
+==Param DataTypes==
+{|border="0" cellpadding="4"
+|- valign="top"
+|
+{| class="wikitable" border="1"
+! colspan="3" | TypeCodes
+|-
+! Id
+! Description
+|-
+| 1 || Float
+|-
+| 2 || Int
+|-
+| 4 || Texture
+|-
+|}
+|
+{| class="wikitable" border="1"
+! colspan="4" | DataType
+|-
+! TypeCode
+! Size(in DWORDs)
+! Data
+! Description
+|-
+| 1 || 1 || Float ||
+|-
+| 1 || 2 || Vector2 ||
+|-
+| 1 || 3 || Vector3 ||
+|-
+| 1 || 4 || Vector4 ||
+|-
+| 2 || 1 || Int ||
+|-
+| 2 || * || Int[] ||
+|-
+| 4 || 4 || Texture || A resource key index.  In most cases it is a RCOL reference, however in the case of GEOM, it is a Key Table index. This data is padded to 16 bytes with 00.
+|-
+| 4 || 5 || TextureKey || ResourceKey (in ITG order) padded to 20 bytes with 00
+|-
+|}
+|}
+
+===Notes===
+# Valid texture reference types include { [[0x033A1435|TXTC]], [[0x00B2D882|DDS]],  [[0x63A33EA7|ANIM]] } resource types.
+===Links===
+[[Shaders|Shaders]] <br/> 
+[[Shaders\Params|ShaderParams]] <br/>
+[[0x015A1849|GEOM]] <br/>
+[[Key_table|Key Table]]

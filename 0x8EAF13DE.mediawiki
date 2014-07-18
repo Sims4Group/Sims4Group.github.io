@@ -1,0 +1,33 @@
+==Overview==
+This is the format for the skeleton/rig of every object in the game.
+
+==Format==
+ DWORD Major Version? //3-4
+ DWORD Minor Version? //1-2
+ DWORD Bone Count
+ --repeat(Bone Count)
+     FLOAT[3] Position
+     FLOAT[4] Orientation //Quaternion 
+     FLOAT[3] Scaling?
+     DWORD Bone Name Length
+     STRING (Bone Name Length ASCII characters)
+     DWORD ??? // Something to do with mirrored bones.  It will be the same as the bone's index except in the case of Left/Right mirrored bones it is the index of it's opposite
+     DWORD Parent Index
+     DWORD Bone Name Hash (FNV 32)
+     DWORD Flags? //Usually 0x23, except with mirrored bones, then one will be 0x3F
+ DWORD Skeleton Name Length
+ --if (Major Version >= 4 OR from The Sims 3)
+     STRING (Skeleton Name Length ASCII characters)
+ --if (Major Version >= 4 OR from The Sims 4)
+     DWORD IK Chain Count
+     --repeat(IK Chain Count)
+         DWORD Length
+         --repeat(Length)  
+             DWORD BoneIndex //bone index  
+         --if (Major Version >= 4)
+             DWORD InfoNode[11] //bone index 
+         DWORD PoleVector //bone index
+         --if (Major Version >= 4) 
+             DWORD SlotInfo //bone index 
+         DWORD SlotOffset //bone index 
+         DWORD Root //bone index 
