@@ -1,6 +1,21 @@
 <!DOCTYPE html>
 <html>
 <title>Sims4Group</title>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script>
+$(function(){
+  $.getJSON( "https://api.github.com/repos/Sims4Group/Sims4Tools/releases", {
+    format: "json"
+  }).done(function( data ) {
+   
+	    var count = 0;
+      $.each( data, function( i ) {
+        count += data[i]["assets"][0]["download_count"]
+      });
+      $('#downloadCount').text("Download count: "+ count.toString());
+    });
+});
+</script>
 <xmp style="display:none;" theme= "Cerulean">
 <br>
 <div style= "text-align:center;font-size: 40px;font-weight:bold; color:#317EAC">Welcome to the Sims4Group Site.</div>
@@ -10,6 +25,7 @@
 
 
 ###<a href="https://github.com/Sims4Group/Sims4Tools/releases"><strong>Download s4pe</strong></a>
+<label id="downloadCount">Download count: Unknown</label>
 <br>
 
 ###Questions and comments about s4pe are welcome.
